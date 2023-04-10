@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BookReadLogs</title> 
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+tr:nth-child(even) {
+  background-color: #EEEEEE;
+}
+th, td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+</style>	
+</head>
+
+<body>
+{% if var1 == 3 %}
+<form  id="login" method="post" enctype="multipart/form-data" action="/booklog/editlog/" >
+	{% csrf_token %}
+	<input type="hidden" name="idnum" id="idnum" value={{idx}} />
+	{{form.as_table}}
+	<input type="submit" value="ویرایش" >
+</form>
+{% endif  %}
+{% if var1 == 2 %}
+<form  id="page" method="post" enctype="multipart/form-data" action="/booklog/" >
+{% csrf_token %}
+{{form.as_table}}
+<input type="submit" value="افزودن" >
+</form>
+{% endif  %}
+<br><br>
+<h3>{{memo}}</h3>
+<br><br>
+<table>
+<tr>
+<th>نام کتاب</th>
+<th>شماره صفحه</th>
+<th></th>
+<th></th>
+</tr>
+{% for log in booklog %}
+	<tr>
+	<td>{{log.name}}</td>
+	<td>{{log.page}}</td>
+	<td><a href="/booklog/editlog?id={{log.id}}">ویرایش</a></td>
+	<td><a href="/booklog/deletelog?id={{log.id}}">پاک کردن</a></td>
+	<tr>
+{% endfor %}
+
+</table>
+	
+</body>
+<html>
